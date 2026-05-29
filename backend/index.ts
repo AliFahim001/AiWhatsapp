@@ -1,7 +1,8 @@
 import app from "./src/app";
 import { connectDB } from "./src/config/database";
 
-const PORT = process.env.PORT || 3000;
+const parsedPort = Number(process.env.PORT);
+const PORT = Number.isInteger(parsedPort) && parsedPort > 0 ? parsedPort : 3000;
 
 connectDB()
   .then(() => {
