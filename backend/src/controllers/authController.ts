@@ -22,7 +22,7 @@ export async function getMe(
   } catch (error) {
     console.error("Error in getMe controller:", error);
     res.status(500);
-    next();
+    next(error);
   }
 }
 
@@ -48,7 +48,7 @@ export async function authCallBack(
         clerkId,
         name: clerkUser.firstName
           ? `${clerkUser.firstName} ${clerkUser.lastName || ""}`.trim()
-          : clerkUser.emailAddresses[0]?.emailAddress.split("@")[0],
+          : clerkUser.emailAddresses[0]?.emailAddress?.split("@")[0],
         email: clerkUser.emailAddresses[0]?.emailAddress,
         avatar: clerkUser.imageUrl,
       });
