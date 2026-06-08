@@ -1,11 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React from "react";
 
 const SocialMediaPage = () => {
   return (
-    <View>
-      <Text>SocialMediaPage</Text>
-    </View>
+    <ScrollView
+      className="bg-surface"
+      contentInsetAdjustmentBehavior="automatic"
+    >
+      <Text className="text-white">SocialMediaPage</Text>
+    </ScrollView>
   );
 };
 
