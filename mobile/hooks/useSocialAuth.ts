@@ -7,12 +7,19 @@ function useAuthSocial() {
   const { startSSOFlow } = useSSO();
 
   const handleSocialAuth = async (strategy: "oauth_google" | "oauth_apple") => {
+    if (loadingStrategy) return; // Prevent multiple simultaneous auth attempts
     setLoadingStrategy(strategy);
     try {
       const { createdSessionId, setActive } = await startSSOFlow({ strategy });
-      if (createdSessionId && setActive) {
-        await setActive({ session: createdSessionId });
+      if (createdSessionId || !setActive) {
+        const provider = strategy === "oauth_google" ? "Google" : "Apple";
+        Alert.alert(
+          "Sign-in Incomplete",
+          `Failed to sign in with ${provider}. Please try again.`,
+        );
+        return;
       }
+      await setActive({ session: createdSessionId });
     } catch (error) {
       console.error("Social auth error:", error);
       const provider = strategy === "oauth_google" ? "Google" : "Apple";
